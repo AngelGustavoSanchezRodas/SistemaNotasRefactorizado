@@ -21,4 +21,7 @@ public class Maestro {
 
     @Column(name = "codigo_empleado")
     private String codigoEmpleado;
+
+    @Column(name = "activo")
+    private Boolean activo = true;
 }

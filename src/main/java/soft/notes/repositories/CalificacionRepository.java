@@ -5,13 +5,11 @@ import org.springframework.stereotype.Repository;
 import soft.notes.entities.Alumno;
 import soft.notes.entities.Calificacion;
 import soft.notes.entities.Materia;
-
 import java.util.Optional;
 
 @Repository
 public interface CalificacionRepository extends JpaRepository<Calificacion, Integer> {
 
-    // Para buscar calificacion por idAlumno y idMateria
-    Optional<Calificacion> findByAlumnoAndMateria(Alumno idAlumno, Materia idMateria);
 
+    Optional<Calificacion> findByAlumnoAndMateria(Alumno alumno, Materia materia);
 }

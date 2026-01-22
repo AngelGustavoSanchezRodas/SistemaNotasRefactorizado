@@ -21,4 +21,7 @@ public class Materia {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+
 }

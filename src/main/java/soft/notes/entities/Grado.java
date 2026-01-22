@@ -21,4 +21,6 @@ public class Grado {
     @Column(name = "seccion")
     private String seccion;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
 }

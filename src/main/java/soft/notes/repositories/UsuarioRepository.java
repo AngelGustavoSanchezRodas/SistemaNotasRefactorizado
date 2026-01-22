@@ -15,5 +15,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     // Para verificar si un correo ya existe
     boolean existsByCorreo(String correo);
 
-
 }

@@ -7,19 +7,36 @@ import lombok.Setter;
 import soft.notes.dto.Grado.GradoSalidaDto;
 import soft.notes.dto.Maestro.MaestroSalidaDto;
 import soft.notes.dto.Materia.MateriaSalidaDto;
+import soft.notes.entities.AsignacionMaestro;
 
 import java.io.Serializable;
 
-/**
- * DTO for {@link soft.notes.entities.AsignacionMaestro}
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class AsignacionMaestroSalidaDto implements Serializable {
+
     private Integer idAsignacion;
     private MaestroSalidaDto maestro;
     private MateriaSalidaDto materia;
     private GradoSalidaDto grado;
+    private Boolean activo;
+
+    // Constructor Mapper
+    public AsignacionMaestroSalidaDto(AsignacionMaestro entidad) {
+        this.idAsignacion = entidad.getIdAsignacion();
+        this.activo = entidad.getActivo();
+
+        // Mapeo anidado
+        this.maestro = new MaestroSalidaDto(
+            entidad.getMaestro().getIdMaestro(),
+            new soft.notes.dto.Usuario.UsuarioSalidaDto(entidad.getMaestro().getUsuario()),
+            entidad.getMaestro().getCodigoEmpleado(),
+            entidad.getMaestro().getActivo()
+        );
+
+        this.materia = new MateriaSalidaDto(entidad.getMateria());
+        this.grado = new GradoSalidaDto(entidad.getGrado());
+    }
 }

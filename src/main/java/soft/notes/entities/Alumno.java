@@ -25,4 +25,7 @@ public class Alumno {
 
     @Column(name = "carnet")
     private String carnet;
+
+    @Column(name = "activo")
+    private Boolean activo = true;
 }

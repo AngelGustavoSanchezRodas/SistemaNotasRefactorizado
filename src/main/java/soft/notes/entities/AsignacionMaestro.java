@@ -27,4 +27,6 @@ public class AsignacionMaestro {
     @JoinColumn(name = "id_grado")
     private Grado grado;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
 }

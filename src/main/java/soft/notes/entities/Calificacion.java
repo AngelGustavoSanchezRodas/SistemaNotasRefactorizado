@@ -17,25 +17,26 @@ public class Calificacion {
 
     @ManyToOne
     @JoinColumn(name = "id_alumno", referencedColumnName = "id_alumno")
-    private Alumno idAlumno;
+    private Alumno alumno;
 
     @ManyToOne
     @JoinColumn(name = "id_materia", referencedColumnName = "id_materia")
-    private Materia idMateria;
+    private Materia materia;
 
     @Column(name = "nota_tarea1")
-    private Double notaTarea1;
+    private Double notaTarea1 = 0.0;
 
     @Column(name = "nota_tarea2")
-    private Double notaTarea2;
+    private Double notaTarea2 = 0.0;
 
     @Column(name = "nota_parcial1")
-    private Double notaParcial1;
+    private Double notaParcial1 = 0.0;
 
     @Column(name = "nota_parcial2")
-    private Double notaParcial2;
+    private Double notaParcial2 = 0.0;
 
     @Column(name = "nota_final")
-    private Double notaFinal;
+    private Double notaFinal = 0.0;
+
 
 }

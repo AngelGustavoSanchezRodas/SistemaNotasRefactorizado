@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Grado.GradoRegistroDto;
-import soft.notes.dto.Maestro.MaestroRegistroDto;
-import soft.notes.dto.Materia.MateriaRegistroDto;
 
 import java.io.Serializable;
 
@@ -20,12 +17,15 @@ import java.io.Serializable;
 @Setter
 public class AsignacionMaestroRegistroDto implements Serializable {
 
-    @NotNull(message = "El maestro no puede ser nulo")
-    private MaestroRegistroDto maestro;
+    // CAMBIO CLAVE: Usamos Integer (IDs), no Objetos completos.
 
-    @NotNull(message = "La materia no puede ser nula")
-    private MateriaRegistroDto materia;
+    @NotNull(message = "El ID del maestro es obligatorio")
+    private Integer idMaestro;
 
-    @NotNull(message = "El grado no puede ser nulo")
-    private GradoRegistroDto grado;
+    @NotNull(message = "El ID de la materia es obligatorio")
+    private Integer idMateria;
+
+    @NotNull(message = "El ID del grado es obligatorio")
+    private Integer idGrado;
+
 }

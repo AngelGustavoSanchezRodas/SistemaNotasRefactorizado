@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import soft.notes.entities.Usuario;
 
 import java.io.Serializable;
 
@@ -22,4 +23,17 @@ public class UsuarioSalidaDto implements Serializable {
     private String correo;
     private String rol;
     private Boolean activo;
+
+    public UsuarioSalidaDto(Usuario usuario) {
+        this.idUsuario = usuario.getIdUsuario();
+        this.nombre = usuario.getNombre();
+        this.apellido = usuario.getApellido();
+        this.telefono = usuario.getTelefono();
+        this.correo = usuario.getCorreo();
+        this.rol = usuario.getRol();
+        this.activo = usuario.getActivo();
+    }
+
+
 }
+

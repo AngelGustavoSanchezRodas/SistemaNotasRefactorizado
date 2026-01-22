@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import soft.notes.dto.Usuario.UsuarioRegistroDto;
 
 import java.io.Serializable;
 
@@ -19,9 +20,6 @@ import java.io.Serializable;
 public class MaestroRegistroDto implements Serializable {
 
     @NotNull(message = "El idUsuario no puede ser nulo")
-    private Integer idUsuario;
-
-    @NotBlank(message = "El codigo no puede estar vacío")
-    private String codigoEmpleado;
+    private UsuarioRegistroDto usuario;
 
 }

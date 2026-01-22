@@ -14,4 +14,7 @@ public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
     // Para buscar alumno por idUsuario y idGrado
     Optional<Alumno> findByUsuarioAndGrado(Usuario idUsuario, Grado idGrado);
 
+    // Obtener alumno por Carnet
+   boolean existsByCarnet(String carnet);
+
 }

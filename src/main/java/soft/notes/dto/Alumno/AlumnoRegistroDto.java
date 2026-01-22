@@ -27,7 +27,4 @@ public class AlumnoRegistroDto implements Serializable {
    @NotNull(message = "El ID del grado es obligatorio")
     private Integer idGrado;
 
-    @NotBlank(message = "El carnet no puede estar vacío")
-    private String carnet;
-
 }
