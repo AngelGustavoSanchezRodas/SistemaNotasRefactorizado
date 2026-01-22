@@ -1,4 +1,4 @@
-package soft.notes.dto.Materia;
+package soft.notes.dto.materia;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

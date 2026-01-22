@@ -1,4 +1,4 @@
-package soft.notes.dto.Calificacion;
+package soft.notes.dto.calificacion;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

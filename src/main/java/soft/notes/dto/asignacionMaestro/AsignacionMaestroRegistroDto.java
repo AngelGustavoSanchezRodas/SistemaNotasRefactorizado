@@ -1,4 +1,4 @@
-package soft.notes.dto.AsignacionMaestro;
+package soft.notes.dto.asignacionMaestro;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

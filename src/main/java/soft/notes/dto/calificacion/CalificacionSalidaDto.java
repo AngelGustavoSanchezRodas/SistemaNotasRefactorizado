@@ -1,11 +1,11 @@
-package soft.notes.dto.Calificacion;
+package soft.notes.dto.calificacion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Alumno.AlumnoSalidaDto;
-import soft.notes.dto.Materia.MateriaSalidaDto;
+import soft.notes.dto.alumno.AlumnoSalidaDto;
+import soft.notes.dto.materia.MateriaSalidaDto;
 import soft.notes.entities.Calificacion;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package soft.notes.dto.Grado;
+package soft.notes.dto.grado;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

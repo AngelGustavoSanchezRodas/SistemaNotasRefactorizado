@@ -1,4 +1,4 @@
-package soft.notes.dto.Materia;
+package soft.notes.dto.materia;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

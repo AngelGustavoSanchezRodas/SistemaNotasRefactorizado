@@ -1,11 +1,11 @@
-package soft.notes.dto.Alumno;
+package soft.notes.dto.alumno;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Grado.GradoSalidaDto;
-import soft.notes.dto.Usuario.UsuarioSalidaDto;
+import soft.notes.dto.grado.GradoSalidaDto;
+import soft.notes.dto.usuario.UsuarioSalidaDto;
 import soft.notes.entities.Alumno;
 
 import java.io.Serializable;

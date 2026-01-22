@@ -3,8 +3,8 @@ package soft.notes.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import soft.notes.dto.Grado.GradoRegistroDto; // Corregí el paquete a minúscula
-import soft.notes.dto.Grado.GradoSalidaDto;
+import soft.notes.dto.grado.GradoRegistroDto; // Corregí el paquete a minúscula
+import soft.notes.dto.grado.GradoSalidaDto;
 import soft.notes.entities.Grado;
 import soft.notes.repositories.GradoRepository;
 

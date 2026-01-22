@@ -1,4 +1,4 @@
-package soft.notes.dto.Usuario;
+package soft.notes.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

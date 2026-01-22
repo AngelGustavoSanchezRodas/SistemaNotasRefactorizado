@@ -1,13 +1,12 @@
-package soft.notes.dto.Alumno;
+package soft.notes.dto.alumno;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Usuario.UsuarioRegistroDto;
+import soft.notes.dto.usuario.UsuarioRegistroDto;
 
 import java.io.Serializable;
 

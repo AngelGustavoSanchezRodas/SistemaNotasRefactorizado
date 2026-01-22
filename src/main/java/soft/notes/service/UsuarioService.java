@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import soft.notes.dto.Usuario.UsuarioRegistroDto;
-import soft.notes.dto.Usuario.UsuarioSalidaDto;
+import soft.notes.dto.usuario.UsuarioRegistroDto;
+import soft.notes.dto.usuario.UsuarioSalidaDto;
 import soft.notes.entities.Usuario;
 import soft.notes.repositories.UsuarioRepository;
 
@@ -40,12 +40,19 @@ public class UsuarioService {
                 .toList();
     }
 
-    // Guardar usuario (Encriptado + Activo por defecto)
     @Transactional
     public UsuarioSalidaDto registrarUsuario(UsuarioRegistroDto dto) {
 
+        Usuario usuarioGuardado = crearUsuarioBase(dto, dto.getRol());
+
+        return new UsuarioSalidaDto(usuarioGuardado);
+    }
+
+    @Transactional
+    public Usuario crearUsuarioBase(UsuarioRegistroDto dto, String rolForzado) {
+
         if (usuarioRepository.existsByCorreo(dto.getCorreo())) {
-            throw new RuntimeException("El correo ya existe: " + dto.getCorreo());
+            throw new RuntimeException("El correo " + dto.getCorreo() + " ya existe.");
         }
 
         Usuario nuevoUsuario = new Usuario();
@@ -53,24 +60,13 @@ public class UsuarioService {
         nuevoUsuario.setApellido(dto.getApellido());
         nuevoUsuario.setTelefono(dto.getTelefono());
         nuevoUsuario.setCorreo(dto.getCorreo());
-        nuevoUsuario.setRol(dto.getRol());
 
-        // SEGURIDAD: Encriptamos la contraseña antes de guardar
+        nuevoUsuario.setRol(rolForzado != null ? rolForzado : dto.getRol());
+
         nuevoUsuario.setPassword(passwordEncoder.encode(dto.getPassword()));
-
         nuevoUsuario.setActivo(true);
 
-        Usuario guardarUsuario = usuarioRepository.save(nuevoUsuario);
-
-        return new UsuarioSalidaDto(
-                guardarUsuario.getIdUsuario(),
-                guardarUsuario.getNombre(),
-                guardarUsuario.getApellido(),
-                guardarUsuario.getTelefono(),
-                guardarUsuario.getCorreo(),
-                guardarUsuario.getRol(),
-                guardarUsuario.getActivo()
-        );
+        return usuarioRepository.save(nuevoUsuario);
     }
 
     @Transactional

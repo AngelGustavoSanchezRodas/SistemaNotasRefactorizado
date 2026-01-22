@@ -3,13 +3,13 @@ package soft.notes.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import soft.notes.dto.AsignacionMaestro.AsignacionMaestroSalidaDto;
-import soft.notes.dto.Grado.GradoSalidaDto;
-import soft.notes.dto.Maestro.MaestroSalidaDto;
-import soft.notes.dto.Materia.MateriaSalidaDto;
+import soft.notes.dto.asignacionMaestro.AsignacionMaestroSalidaDto;
+import soft.notes.dto.grado.GradoSalidaDto;
+import soft.notes.dto.maestro.MaestroSalidaDto;
+import soft.notes.dto.materia.MateriaSalidaDto;
 import soft.notes.entities.*;
 import soft.notes.repositories.*;
-import soft.notes.dto.AsignacionMaestro.AsignacionMaestroRegistroDto;
+import soft.notes.dto.asignacionMaestro.AsignacionMaestroRegistroDto;
 import soft.notes.entities.AsignacionMaestro;
 
 import java.util.List;

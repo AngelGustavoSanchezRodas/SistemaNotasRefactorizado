@@ -1,12 +1,12 @@
-package soft.notes.dto.AsignacionMaestro;
+package soft.notes.dto.asignacionMaestro;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Grado.GradoSalidaDto;
-import soft.notes.dto.Maestro.MaestroSalidaDto;
-import soft.notes.dto.Materia.MateriaSalidaDto;
+import soft.notes.dto.grado.GradoSalidaDto;
+import soft.notes.dto.maestro.MaestroSalidaDto;
+import soft.notes.dto.materia.MateriaSalidaDto;
 import soft.notes.entities.AsignacionMaestro;
 
 import java.io.Serializable;
@@ -31,7 +31,7 @@ public class AsignacionMaestroSalidaDto implements Serializable {
         // Mapeo anidado
         this.maestro = new MaestroSalidaDto(
             entidad.getMaestro().getIdMaestro(),
-            new soft.notes.dto.Usuario.UsuarioSalidaDto(entidad.getMaestro().getUsuario()),
+            new soft.notes.dto.usuario.UsuarioSalidaDto(entidad.getMaestro().getUsuario()),
             entidad.getMaestro().getCodigoEmpleado(),
             entidad.getMaestro().getActivo()
         );

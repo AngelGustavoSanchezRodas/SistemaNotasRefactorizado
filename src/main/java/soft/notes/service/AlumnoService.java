@@ -1,13 +1,12 @@
 package soft.notes.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import soft.notes.dto.Alumno.AlumnoRegistroDto;
-import soft.notes.dto.Alumno.AlumnoSalidaDto;
-import soft.notes.dto.Grado.GradoSalidaDto;
-import soft.notes.dto.Usuario.UsuarioSalidaDto;
+import soft.notes.dto.alumno.AlumnoRegistroDto;
+import soft.notes.dto.alumno.AlumnoSalidaDto;
+import soft.notes.dto.grado.GradoSalidaDto;
+import soft.notes.dto.usuario.UsuarioSalidaDto;
 import soft.notes.entities.Alumno;
 import soft.notes.entities.Grado;
 import soft.notes.entities.Usuario;
@@ -29,7 +28,7 @@ public class AlumnoService {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UsuarioService usuarioService;
 
     @Autowired
     private GradoRepository gradoRepository;
@@ -67,33 +66,22 @@ public class AlumnoService {
     @Transactional
     public AlumnoSalidaDto guardarAlumno(AlumnoRegistroDto dto) {
 
-        if (usuarioRepository.existsByCorreo(dto.getUsuario().getCorreo())) {
-            throw new RuntimeException("El correo " + dto.getUsuario().getCorreo() + " ya está registrado.");
-        }
-
-        // Buscamos el grado por el id
+        // 1. Buscamos el grado (Validación propia de Alumno)
         Grado gradoExistente = gradoRepository.findById(dto.getIdGrado())
                 .orElseThrow(() -> new RuntimeException("Grado no existe"));
 
-        // Traemos los datos de usuario y los ingresamos
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombre(dto.getUsuario().getNombre());
-        nuevoUsuario.setApellido(dto.getUsuario().getApellido());
-        nuevoUsuario.setTelefono(dto.getUsuario().getTelefono());
-        nuevoUsuario.setCorreo(dto.getUsuario().getCorreo());
-        nuevoUsuario.setRol("ALUMNO");
-        nuevoUsuario.setActivo(true);
-        nuevoUsuario.setPassword(passwordEncoder.encode(dto.getUsuario().getPassword()));
+        // 2. DELEGAMOS la creación del usuario al UsuarioService
+        // Le pasamos los datos y forzamos el rol "ALUMNO"
+        Usuario usuarioGuardado = usuarioService.crearUsuarioBase(dto.getUsuario(), "ALUMNO");
 
-        Usuario guardarUsuario = usuarioRepository.save(nuevoUsuario);
-
-        // Creamos el Alumno
+        // 3. Creamos el Alumno vinculando la entidad que nos devolvieron
         Alumno nuevoAlumno = new Alumno();
-        nuevoAlumno.setUsuario(guardarUsuario);
+        nuevoAlumno.setUsuario(usuarioGuardado);
         nuevoAlumno.setGrado(gradoExistente);
-        nuevoAlumno.setActivo(true); // Nos aseguramos que nazca activo
+        nuevoAlumno.setActivo(true);
 
-        String carnetGenerado = generarCarnet(guardarUsuario.getNombre(), guardarUsuario.getApellido());
+        // Generamos carnet usando los datos del usuario creado
+        String carnetGenerado = generarCarnet(usuarioGuardado.getNombre(), usuarioGuardado.getApellido());
         nuevoAlumno.setCarnet(carnetGenerado);
 
         Alumno guardarAlumno = alumnoRepository.save(nuevoAlumno);
@@ -103,10 +91,9 @@ public class AlumnoService {
                 new UsuarioSalidaDto(guardarAlumno.getUsuario()),
                 new GradoSalidaDto(guardarAlumno.getGrado()),
                 guardarAlumno.getCarnet(),
-                guardarAlumno.getActivo() // 5to parámetro
+                guardarAlumno.getActivo()
         );
     }
-
     // Editamos la informacion academica del alumno (Cambio de Grado)
     @Transactional
     public AlumnoSalidaDto cambiarGrado(Integer idAlumno, Integer idNuevoGrado) {

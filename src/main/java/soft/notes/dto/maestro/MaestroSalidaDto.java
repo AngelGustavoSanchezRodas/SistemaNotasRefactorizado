@@ -1,10 +1,10 @@
-package soft.notes.dto.Maestro;
+package soft.notes.dto.maestro;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import soft.notes.dto.Usuario.UsuarioSalidaDto;
+import soft.notes.dto.usuario.UsuarioSalidaDto;
 import soft.notes.entities.Maestro;
 
 import java.io.Serializable;

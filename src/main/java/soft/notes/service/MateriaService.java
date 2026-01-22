@@ -3,8 +3,8 @@ package soft.notes.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import soft.notes.dto.Materia.MateriaRegistroDto; // Corregí mayúsculas del paquete
-import soft.notes.dto.Materia.MateriaSalidaDto;
+import soft.notes.dto.materia.MateriaRegistroDto; // Corregí mayúsculas del paquete
+import soft.notes.dto.materia.MateriaSalidaDto;
 import soft.notes.entities.Materia;
 import soft.notes.repositories.MateriaRepository;
 
