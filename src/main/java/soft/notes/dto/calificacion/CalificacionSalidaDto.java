@@ -30,6 +30,8 @@ public class CalificacionSalidaDto implements Serializable {
     private Double notaParcial2;
     private Double notaFinal;
 
+    private Boolean activo;
+
 public CalificacionSalidaDto(Calificacion c) {
     this.idCalificacion = c.getIdCalificacion();
     this.idAlumno = new AlumnoSalidaDto(c.getAlumno());
@@ -39,5 +41,6 @@ public CalificacionSalidaDto(Calificacion c) {
     this.notaParcial1 = c.getNotaParcial1();
     this.notaParcial2 = c.getNotaParcial2();
     this.notaFinal = c.getNotaFinal();
+    this.activo = c.getActivo();
 }
 }

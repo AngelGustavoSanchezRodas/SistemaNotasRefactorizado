@@ -17,19 +17,19 @@ public class MateriaService {
     @Autowired
     private MateriaRepository materiaRepository;
 
-    // Obtener todas las materias (SOLO LAS ACTIVAS)
+    // Obtener todas las materias
     @Transactional(readOnly = true)
     public List<MateriaSalidaDto> obtenerTodasLasMaterias(){
         List<Materia> materias = materiaRepository.findAll();
 
         return materias.stream()
-                // 1. FILTRO SOFT DELETE: Solo mostramos las que tienen activo = true
+               // Usamos el fikter para listar solo los activos
                 .filter(Materia::getActivo)
                 .map(materia -> new MateriaSalidaDto(
                             materia.getIdMateria(),
                             materia.getNombre(),
                             materia.getDescripcion(),
-                            materia.getActivo() // 2. ACTUALIZACIÓN: Agregamos el campo al DTO
+                            materia.getActivo()
                 ))
                 .collect(Collectors.toList());
     }
@@ -45,7 +45,7 @@ public class MateriaService {
         Materia nuevaMateria = new Materia();
         nuevaMateria.setNombre(dto.getNombre());
         nuevaMateria.setDescripcion(dto.getDescripcion());
-        // nuevaMateria.setActivo(true); // Opcional: La entidad ya lo pone en true por defecto
+        nuevaMateria.setActivo(true);
 
         Materia materiaGuardada = materiaRepository.save(nuevaMateria);
 
@@ -53,7 +53,7 @@ public class MateriaService {
                 materiaGuardada.getIdMateria(),
                 materiaGuardada.getNombre(),
                 materiaGuardada.getDescripcion(),
-                materiaGuardada.getActivo() // Nuevo campo
+                materiaGuardada.getActivo()
         );
     }
 
@@ -62,11 +62,11 @@ public class MateriaService {
     public MateriaSalidaDto editarMateria(Integer idMateria, MateriaRegistroDto dto){
 
         Materia materia = materiaRepository.findById(idMateria)
-                .orElseThrow(() -> new RuntimeException("La materia no existe")); // Mensaje corregido
+                .orElseThrow(() -> new RuntimeException("La materia no existe"));
 
         materia.setNombre(dto.getNombre());
         materia.setDescripcion(dto.getDescripcion());
-        // Nota: Al editar no tocamos el "activo", se mantiene como estaba.
+
 
         Materia materiaActualizada = materiaRepository.save(materia);
 
@@ -82,7 +82,6 @@ public class MateriaService {
     @Transactional
     public void eliminarMateria(Integer idMateria){
 
-        // Buscamos la materia
         Materia materia = materiaRepository.findById(idMateria)
                 .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
 

@@ -23,6 +23,9 @@ public class Calificacion {
     @JoinColumn(name = "id_materia", referencedColumnName = "id_materia")
     private Materia materia;
 
+    @Column(name = "activo")
+    private Boolean activo = true;
+
     @Column(name = "nota_tarea1")
     private Double notaTarea1 = 0.0;
 

@@ -69,6 +69,26 @@ public class UsuarioService {
         return usuarioRepository.save(nuevoUsuario);
     }
 
+    @Transactional(readOnly = true)
+    public UsuarioSalidaDto login(String correo, String passwordRaw) {
+
+        // 1. Buscar usuario
+        Usuario usuario = usuarioRepository.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
+
+        // 2. Verificar contraseña
+        if (!passwordEncoder.matches(passwordRaw, usuario.getPassword())) {
+            throw new RuntimeException("Credenciales inválidas");
+        }
+
+        // 3. Verificar si está activo
+        if (!usuario.getActivo()) {
+            throw new RuntimeException("El usuario está desactivado");
+        }
+
+        return new UsuarioSalidaDto(usuario);
+    }
+
     @Transactional
     public UsuarioSalidaDto editarUsuario(Integer idUsuario, UsuarioRegistroDto dto) {
         Usuario usuario = usuarioRepository.findById(idUsuario)

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +25,12 @@ public class Grado {
 
     @Column(name = "activo")
     private Boolean activo = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "grado_materias",
+        joinColumns = @JoinColumn(name = "id_grado"),
+        inverseJoinColumns = @JoinColumn(name = "id_materia")
+    )
+    private List<Materia> materiasDelGrado;
 }

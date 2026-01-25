@@ -21,12 +21,12 @@ public class MaestroService {
     private MaestroRepository maestroRepository;
 
     @Autowired
-    private UsuarioService usuarioService; // <--- Inyección clave
+    private UsuarioService usuarioService;
 
-    // Generador de Código de Empleado (Ej: PROF-2026-839)
+    // Generador de Código de Empleado
     private String generarCodigoEmpleado() {
         int year = Year.now().getValue();
-        int randomNum = new Random().nextInt(9000) + 1000; // 4 dígitos
+        int randomNum = new Random().nextInt(9000) + 1000;
         return "PROF-" + year + "-" + randomNum;
     }
 
@@ -73,7 +73,6 @@ public class MaestroService {
         Maestro maestro = maestroRepository.findById(idMaestro)
                 .orElseThrow(() -> new RuntimeException("Maestro no encontrado"));
 
-        // Soft delete del perfil maestro
         maestro.setActivo(false);
         // Soft delete del usuario (para que no pueda loguearse)
         maestro.getUsuario().setActivo(false);

@@ -47,6 +47,14 @@ public class AsignacionMaestroService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<AsignacionMaestroSalidaDto> obtenerCursosPorMaestroUsuario(Integer idUsuario) {
+        return asignacionMaestroRepository.findByMaestro_Usuario_IdUsuarioAndActivoTrue(idUsuario)
+                .stream()
+                .map(AsignacionMaestroSalidaDto::new)
+                .toList();
+    }
+
     // Para ver la carga académica de un profesor específico
     @Transactional(readOnly = true)
     public List<AsignacionMaestroSalidaDto> obtenerPorMaestro(Integer idMaestro) {
@@ -55,7 +63,7 @@ public class AsignacionMaestroService {
                 .orElseThrow(() -> new RuntimeException("Maestro no encontrado"));
 
         return asignacionMaestroRepository.findByMaestroAndActivoTrue(maestro).stream()
-                .map(AsignacionMaestroSalidaDto::new) // Usando referencia a constructor (más limpio)
+                .map(AsignacionMaestroSalidaDto::new)
                 .toList();
     }
 
@@ -99,7 +107,7 @@ public class AsignacionMaestroService {
         return new AsignacionMaestroSalidaDto(asignacionGuardada);
     }
 
-    // Editar Asignación (Corrigiendo errores de asignación)
+    // Editar Asignación
     @Transactional
     public AsignacionMaestroSalidaDto editarAsignacion(Integer idAsignacion, AsignacionMaestroRegistroDto dto) {
 

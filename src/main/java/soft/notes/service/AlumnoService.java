@@ -33,7 +33,7 @@ public class AlumnoService {
     @Autowired
     private GradoRepository gradoRepository;
 
-    // Generador del carnet (Privado)
+    // Generador del carnet
     private String generarCarnet(String nombre, String apellido) {
         int year = Year.now().getValue();
         char letraN = nombre.toUpperCase().charAt(0);
@@ -44,18 +44,18 @@ public class AlumnoService {
         return String.valueOf(year) + letraN + letraA + randomNum;
     }
 
-    // Obtenemos todos los alumnos (SOLO ACTIVOS)
+    // Obtenemos todos los alumnos
     @Transactional(readOnly = true)
     public List<AlumnoSalidaDto> obtenerAlumnos() {
         List<Alumno> alumnos = alumnoRepository.findAll();
 
         return alumnos.stream()
-                // 1. FILTRO: Solo alumnos activos
+                // Solo alumnos activos
                 .filter(Alumno::getActivo)
                 .map(alumno -> new AlumnoSalidaDto(
                         alumno.getIdAlumno(),
                         new UsuarioSalidaDto(alumno.getUsuario()),
-                        new GradoSalidaDto(alumno.getGrado()),
+                        alumno.getGrado() != null ? new GradoSalidaDto(alumno.getGrado()) : null,
                         alumno.getCarnet(),
                         alumno.getActivo()
                 ))
@@ -67,18 +67,12 @@ public class AlumnoService {
     public AlumnoSalidaDto guardarAlumno(AlumnoRegistroDto dto) {
 
         // 1. Buscamos el grado (Validación propia de Alumno)
-        Grado gradoExistente = gradoRepository.findById(dto.getIdGrado())
-                .orElseThrow(() -> new RuntimeException("Grado no existe"));
+       Usuario usuarioGuardado = usuarioService.crearUsuarioBase(dto.getUsuario(), "ALUMNO");
 
-        // 2. DELEGAMOS la creación del usuario al UsuarioService
-        // Le pasamos los datos y forzamos el rol "ALUMNO"
-        Usuario usuarioGuardado = usuarioService.crearUsuarioBase(dto.getUsuario(), "ALUMNO");
-
-        // 3. Creamos el Alumno vinculando la entidad que nos devolvieron
-        Alumno nuevoAlumno = new Alumno();
+       Alumno nuevoAlumno = new Alumno();
         nuevoAlumno.setUsuario(usuarioGuardado);
-        nuevoAlumno.setGrado(gradoExistente);
         nuevoAlumno.setActivo(true);
+        nuevoAlumno.setGrado(null);
 
         // Generamos carnet usando los datos del usuario creado
         String carnetGenerado = generarCarnet(usuarioGuardado.getNombre(), usuarioGuardado.getApellido());
@@ -89,7 +83,7 @@ public class AlumnoService {
         return new AlumnoSalidaDto(
                 guardarAlumno.getIdAlumno(),
                 new UsuarioSalidaDto(guardarAlumno.getUsuario()),
-                new GradoSalidaDto(guardarAlumno.getGrado()),
+                guardarAlumno.getGrado() != null ? new GradoSalidaDto(guardarAlumno.getGrado()) : null,
                 guardarAlumno.getCarnet(),
                 guardarAlumno.getActivo()
         );
@@ -119,17 +113,16 @@ public class AlumnoService {
         );
     }
 
-    // 3. IMPLEMENTACIÓN DE SOFT DELETE
+
     @Transactional
     public void eliminarAlumno(Integer idAlumno) {
 
         Alumno alumno = alumnoRepository.findById(idAlumno)
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
-        // Opción A: Desactivar solo el registro académico
         alumno.setActivo(false);
 
-        // Opción B (Opcional): Si quieres que TAMPOCO pueda entrar al sistema, descomenta esto:
+        //Evitamos que pueda acceder a la plataforma
         alumno.getUsuario().setActivo(false);
 
         alumnoRepository.save(alumno);

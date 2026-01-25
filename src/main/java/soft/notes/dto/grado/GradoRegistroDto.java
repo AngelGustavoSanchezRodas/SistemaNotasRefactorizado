@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * DTO for {@link soft.notes.entities.Grado}
@@ -22,4 +23,6 @@ public class GradoRegistroDto implements Serializable {
 
     @NotBlank(message = "La sección no puede estar vacía")
     private String seccion;
+
+    private List<Integer> idsMaterias;
 }

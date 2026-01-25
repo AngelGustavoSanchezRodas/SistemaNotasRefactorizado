@@ -27,4 +27,7 @@ public interface AsignacionMaestroRepository extends JpaRepository<AsignacionMae
 
     // Si alguna vez necesitas encontrar LA asignación única para editarla, usaremos 3 parametros
     Optional<AsignacionMaestro> findByMaestroAndMateriaAndGradoAndActivoTrue(Maestro maestro, Materia materia, Grado grado);
+
+    List<AsignacionMaestro> findByMaestro_Usuario_IdUsuarioAndActivoTrue(Integer idUsuario);
+
 }

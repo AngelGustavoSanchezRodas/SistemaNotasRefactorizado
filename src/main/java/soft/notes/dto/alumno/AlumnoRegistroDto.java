@@ -23,7 +23,7 @@ public class AlumnoRegistroDto implements Serializable {
     @NotNull(message = "El usuario no puede ser nulo")
     private UsuarioRegistroDto usuario;
 
-   @NotNull(message = "El ID del grado es obligatorio")
-    private Integer idGrado;
+//   @NotNull(message = "El ID del grado es obligatorio")
+//    private Integer idGrado;
 
 }
